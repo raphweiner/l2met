@@ -55,15 +55,16 @@ type LibratoOutlet struct {
 	NumConverters int
 	Reader        Reader
 	Retries       int
-	User          string
-	Pass          string
 }
 
-func NewLibratoOutlet(mi, mc, mo int) *LibratoOutlet {
+func NewLibratoOutlet(s, c, r int, rdr Reader) *LibratoOutlet {
 	l := new(LibratoOutlet)
-	l.Inbox = make(chan *bucket.Bucket, mi)
-	l.Conversions = make(chan *LibratoPayload, mc)
-	l.Outbox = make(chan []*LibratoPayload, mo)
+	l.Inbox = make(chan *bucket.Bucket, s)
+	l.Conversions = make(chan *LibratoPayload, s)
+	l.Outbox = make(chan []*LibratoPayload, s)
+	l.NumConverters = c
+	l.NumOutlets = c
+	l.Reader = rdr
 	return l
 }
 
